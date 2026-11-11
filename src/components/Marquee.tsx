@@ -11,10 +11,10 @@ function Track() {
       {ITEMS.map((t) => (
         <span
           key={t}
-          className="flex items-center gap-6 pr-6 text-xs font-semibold tracking-[0.2em] whitespace-nowrap text-cream sm:text-sm"
+          className="flex items-center gap-6 pr-6 text-xs font-semibold tracking-[0.2em] whitespace-nowrap text-on-maroon sm:text-sm"
         >
           {t}
-          <span className="text-gold" aria-hidden="true">
+          <span className="text-on-maroon/80" aria-hidden="true">
             ✦
           </span>
         </span>

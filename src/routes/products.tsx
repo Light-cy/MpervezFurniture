@@ -40,7 +40,7 @@ function ProductsPage() {
   const list = active ? products.filter((p) => p.category === active.id) : products;
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-10 sm:py-14">
+    <div className="mx-auto w-full max-w-[1536px] px-4 py-10 sm:px-6 sm:py-14 lg:px-8 xl:px-10">
       <Reveal>
         <SectionHeading
           as="h1"
@@ -104,7 +104,7 @@ function ProductsPage() {
       </div>
 
       <Reveal delay={0.15}>
-        <div className="mt-6 grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-3 lg:grid-cols-4">
+        <div className="mt-6 grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
           {list.map((p) => (
             <ProductCard key={p.id} product={p} />
           ))}

@@ -5,7 +5,7 @@
 
 /*
  * Pervez Furniture design system.
- * Brand palette: night black, gold, light gold, royal red, cream.
+ * Brand palette: warm light cream, royal maroon, luxury gold, deep espresso.
  * All colors are defined once here as tokens; components never hardcode colors.
  */
 
@@ -43,6 +43,10 @@
   --color-gold: var(--gold);
   --color-gold-light: var(--gold-light);
   --color-royal: var(--royal);
+  --color-maroon: var(--maroon);
+  --color-maroon-card: var(--maroon-card);
+  --color-on-maroon: var(--on-maroon);
+  --color-on-maroon-muted: var(--on-maroon-muted);
   --color-cream: var(--cream);
   --color-cream-muted: var(--cream-muted);
   --color-whatsapp: var(--whatsapp);
@@ -54,16 +58,20 @@
 :root {
   --radius: 0.75rem;
 
-  /* Brand palette */
-  --night: oklch(0.145 0 89.9);
-  --night-card: oklch(0.184 0.005 67.5);
-  --night-elevated: oklch(0.206 0.011 80.5);
-  --gold: oklch(0.731 0.121 80.5);
-  --gold-light: oklch(0.847 0.105 85.4);
-  --royal: oklch(0.516 0.202 25.9);
-  --cream: oklch(0.953 0.017 88);
-  --cream-muted: oklch(0.704 0.028 87.9);
-  --whatsapp: oklch(0.761 0.201 149.7);
+  /* Brand palette (Warm Light Cream + Dark Brown + Royal Maroon) */
+  --night: oklch(0.963 0.009 67.5);
+  --night-card: oklch(1 0 0);
+  --night-elevated: oklch(0.956 0.024 75);
+  --gold: oklch(0.22 0.035 45);
+  --gold-light: oklch(0.3 0.045 48);
+  --royal: oklch(0.22 0.035 48);
+  --maroon: oklch(0.2 0.032 46);
+  --maroon-card: oklch(0.16 0.028 46);
+  --on-maroon: oklch(0.963 0.009 67.5);
+  --on-maroon-muted: oklch(0.84 0.025 72);
+  --cream: oklch(0.235 0.032 48);
+  --cream-muted: oklch(0.475 0.022 52);
+  --whatsapp: oklch(0.62 0.185 149.7);
 
   /* Semantic tokens */
   --background: var(--night);
@@ -81,9 +89,9 @@
   --accent: var(--night-elevated);
   --accent-foreground: var(--cream);
   --destructive: var(--royal);
-  --destructive-foreground: var(--cream);
-  --border: oklch(0.731 0.121 80.5 / 0.16);
-  --input: oklch(0.731 0.121 80.5 / 0.25);
+  --destructive-foreground: var(--on-maroon);
+  --border: oklch(0.22 0.035 45 / 0.16);
+  --input: oklch(0.22 0.035 45 / 0.25);
   --ring: var(--gold);
 }
 
@@ -103,9 +111,9 @@
   --accent: var(--night-elevated);
   --accent-foreground: var(--cream);
   --destructive: var(--royal);
-  --destructive-foreground: var(--cream);
-  --border: oklch(0.731 0.121 80.5 / 0.16);
-  --input: oklch(0.731 0.121 80.5 / 0.25);
+  --destructive-foreground: var(--on-maroon);
+  --border: oklch(0.22 0.035 45 / 0.16);
+  --input: oklch(0.22 0.035 45 / 0.25);
   --ring: var(--gold);
 }
 
@@ -213,10 +221,10 @@
 .gold-shimmer-text {
   background: linear-gradient(
     110deg,
-    var(--gold) 20%,
-    var(--gold-light) 42%,
-    var(--gold) 64%,
-    var(--gold-light) 85%
+    var(--cream) 15%,
+    var(--gold) 42%,
+    var(--royal) 65%,
+    var(--gold) 88%
   );
   background-size: 200% auto;
   -webkit-background-clip: text;
@@ -254,9 +262,9 @@
   border-radius: 9999px;
   padding: 0.875rem 1.75rem;
   font-weight: 600;
-  color: var(--color-night);
-  background: linear-gradient(135deg, var(--gold-light), var(--gold) 55%, var(--gold-light));
-  box-shadow: 0 10px 30px -10px oklch(0.731 0.121 80.5 / 0.5);
+  color: var(--color-on-maroon);
+  background: linear-gradient(135deg, var(--gold), var(--cream) 65%, var(--gold-light));
+  box-shadow: 0 10px 30px -10px oklch(0.32 0.055 50 / 0.45);
   transition:
     transform 0.3s ease,
     box-shadow 0.3s ease;
@@ -264,7 +272,7 @@
 
 .btn-gold:hover {
   transform: translateY(-2px);
-  box-shadow: 0 14px 36px -10px oklch(0.731 0.121 80.5 / 0.65);
+  box-shadow: 0 14px 36px -10px oklch(0.32 0.055 50 / 0.6);
 }
 
 .btn-gold::after {
@@ -274,7 +282,7 @@
   bottom: 0;
   left: 0;
   width: 35%;
-  background: linear-gradient(90deg, transparent, oklch(1 0 0 / 0.45), transparent);
+  background: linear-gradient(90deg, transparent, oklch(1 0 0 / 0.35), transparent);
   animation: pf-shine 3s ease-in-out infinite;
 }
 
@@ -296,7 +304,7 @@
 }
 
 .btn-outline-gold:hover {
-  background-color: oklch(0.731 0.121 80.5 / 0.12);
+  background-color: oklch(0.32 0.055 50 / 0.1);
   transform: translateY(-2px);
 }
 
@@ -308,9 +316,9 @@
   border-radius: 9999px;
   padding: 0.875rem 1.75rem;
   font-weight: 600;
-  color: oklch(0.145 0 89.9);
-  background: linear-gradient(135deg, var(--whatsapp), oklch(0.68 0.19 149.7));
-  box-shadow: 0 10px 30px -10px oklch(0.761 0.201 149.7 / 0.55);
+  color: var(--color-on-maroon);
+  background: linear-gradient(135deg, var(--whatsapp), oklch(0.55 0.175 149.7));
+  box-shadow: 0 10px 30px -10px oklch(0.62 0.185 149.7 / 0.45);
   transition:
     transform 0.3s ease,
     box-shadow 0.3s ease;
@@ -320,30 +328,67 @@
   transform: translateY(-2px);
 }
 
-/* ---------- Navbar link underline ---------- */
+/* ---------- Navbar link styling & animation ---------- */
 
 .nav-link {
   position: relative;
-  padding-bottom: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.9375rem; /* 15px */
+  font-weight: 600;
+  letter-spacing: 0.025em;
+  color: var(--color-cream-muted);
+  border: 1px solid transparent;
+  transition:
+    color 0.25s ease,
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.nav-link:hover {
+  color: var(--color-cream);
+  background-color: var(--color-night-card);
+  border-color: var(--color-border);
+  transform: translateY(-1.5px);
+  box-shadow: 0 4px 12px -2px oklch(0.22 0.035 45 / 0.08);
 }
 
 .nav-link::after {
   content: "";
   position: absolute;
-  left: 0;
-  bottom: 0;
+  bottom: 4px;
+  left: 50%;
+  width: 22px;
   height: 2px;
-  width: 100%;
-  border-radius: 2px;
+  border-radius: 9999px;
   background: linear-gradient(90deg, var(--gold-light), var(--gold));
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.3s ease;
+  transform: translateX(-50%) scaleX(0);
+  transform-origin: center;
+  opacity: 0;
+  transition:
+    transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.25s ease;
 }
 
 .nav-link:hover::after,
-.nav-link[data-status="active"]::after {
-  transform: scaleX(1);
+.nav-link.active::after,
+.nav-link[aria-current="page"]::after {
+  transform: translateX(-50%) scaleX(1);
+  opacity: 1;
+}
+
+.nav-link.active,
+.nav-link[aria-current="page"] {
+  color: var(--color-cream);
+  background-color: var(--color-night-card);
+  border-color: oklch(0.22 0.035 45 / 0.25);
+  font-weight: 700;
+  box-shadow: 0 4px 14px -2px oklch(0.22 0.035 45 / 0.1);
 }
 
 /* ---------- Section heading ornament ---------- */

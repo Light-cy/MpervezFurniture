@@ -23,6 +23,7 @@ export function AdminProductModal({
   const [name, setName] = useState("");
   const [category, setCategory] = useState<Category>("beds");
   const [price, setPrice] = useState("150000");
+  const [originalPrice, setOriginalPrice] = useState("");
   const [badge, setBadge] = useState<"" | "NEW" | "HOT" | "SALE">("");
   const [bestSeller, setBestSeller] = useState(false);
   const [description, setDescription] = useState("");
@@ -42,6 +43,7 @@ export function AdminProductModal({
       setName(product.name);
       setCategory(product.category);
       setPrice(String(product.price));
+      setOriginalPrice(product.originalPrice ? String(product.originalPrice) : "");
       setBadge(product.badge ?? "");
       setBestSeller(product.bestSeller);
       setDescription(product.description);
@@ -52,6 +54,7 @@ export function AdminProductModal({
       setName("");
       setCategory("beds");
       setPrice("185000");
+      setOriginalPrice("");
       setBadge("NEW");
       setBestSeller(false);
       setDescription(
@@ -120,6 +123,17 @@ export function AdminProductModal({
       return;
     }
 
+    const numericOriginalPrice = originalPrice.trim()
+      ? Math.round(Number(originalPrice))
+      : undefined;
+    if (
+      numericOriginalPrice !== undefined &&
+      (Number.isNaN(numericOriginalPrice) || numericOriginalPrice <= 0)
+    ) {
+      setError("Please enter a valid original price or leave it blank.");
+      return;
+    }
+
     const fallbackImage = images[0] || product?.images[0] || "/og-image.jpg";
     const finalImages = images.length > 0 ? images : [fallbackImage];
 
@@ -147,6 +161,9 @@ export function AdminProductModal({
         name: name.trim(),
         category,
         price: numericPrice,
+        ...(numericOriginalPrice && numericOriginalPrice > numericPrice
+          ? { originalPrice: numericOriginalPrice }
+          : {}),
         ...(badge ? { badge } : {}),
         bestSeller,
         description: description.trim(),
@@ -240,7 +257,7 @@ export function AdminProductModal({
 
             <div>
               <label htmlFor="prod-price-input" className="block text-xs font-semibold text-cream">
-                Price (Whole PKR Rupees) <span className="text-gold">*</span>
+                Selling Price (Whole PKR Rupees) <span className="text-gold">*</span>
               </label>
               <input
                 id="prod-price-input"
@@ -252,6 +269,43 @@ export function AdminProductModal({
                 onChange={(e) => setPrice(e.target.value)}
                 className="mt-1.5 w-full rounded-xl border border-border bg-night px-3.5 py-2.5 text-sm text-cream focus:border-gold focus:outline-none"
               />
+              <span className="mt-1 block text-[11px] text-cream-muted">
+                Final amount the customer pays
+              </span>
+            </div>
+
+            <div>
+              <div className="flex items-center justify-between">
+                <label
+                  htmlFor="prod-orig-price-input"
+                  className="block text-xs font-semibold text-cream"
+                >
+                  Original Price / Cut Price (PKR)
+                </label>
+                {Number(originalPrice) > Number(price) && (
+                  <span className="rounded-full bg-gold/15 px-2 py-0.5 text-[10px] font-bold tracking-wide text-gold border border-gold/25">
+                    {Math.round(
+                      ((Number(originalPrice) - Number(price)) / Number(originalPrice)) * 100,
+                    )}
+                    % OFF
+                  </span>
+                )}
+              </div>
+              <input
+                id="prod-orig-price-input"
+                type="number"
+                min={1000}
+                step={500}
+                placeholder="e.g. 535000 (Leave blank for no discount)"
+                value={originalPrice}
+                onChange={(e) => setOriginalPrice(e.target.value)}
+                className="mt-1.5 w-full rounded-xl border border-border bg-night px-3.5 py-2.5 text-sm text-cream focus:border-gold focus:outline-none"
+              />
+              <span className="mt-1 block text-[11px] text-cream-muted">
+                {originalPrice && Number(originalPrice) > Number(price)
+                  ? `Shows cut price with ${Math.round(((Number(originalPrice) - Number(price)) / Number(originalPrice)) * 100)}% discount badge`
+                  : "Leave empty if product has no discount"}
+              </span>
             </div>
 
             <div>
@@ -350,7 +404,7 @@ export function AdminProductModal({
                       type="button"
                       onClick={() => setImages((prev) => prev.filter((_, i) => i !== idx))}
                       aria-label="Remove product photo"
-                      className="absolute top-1 right-1 grid h-5 w-5 place-items-center rounded-full bg-night/90 text-cream hover:bg-royal"
+                      className="absolute top-1 right-1 grid h-5 w-5 place-items-center rounded-full bg-night/90 text-cream hover:bg-royal hover:text-on-maroon"
                     >
                       <Trash2 className="h-3 w-3" />
                     </button>

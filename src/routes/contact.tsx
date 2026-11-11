@@ -1,8 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Clock, MapPin, MessageCircle, Phone } from "lucide-react";
+import { Clock, Globe, MapPin, Phone } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 import { SectionHeading } from "@/components/SectionHeading";
 import { SocialLinks } from "@/components/SocialLinks";
+import { WhatsAppIcon } from "@/components/WhatsAppIcon";
 import { SITE, absoluteUrl, waLink } from "@/config/site";
 import { trackWhatsAppClick } from "@/lib/analytics";
 
@@ -30,7 +31,7 @@ export const Route = createFileRoute("/contact")({
 
 function ContactPage() {
   return (
-    <div className="mx-auto max-w-6xl px-4 py-10 sm:py-14">
+    <div className="mx-auto w-full max-w-[1536px] px-4 py-10 sm:px-6 sm:py-14 lg:px-8 xl:px-10">
       <Reveal>
         <SectionHeading as="h1" eyebrow="We're here for you" title="Contact Us" />
       </Reveal>
@@ -58,7 +59,7 @@ function ContactPage() {
             </a>
           </div>
           <div className="rounded-2xl border border-border bg-night-card p-6">
-            <MessageCircle className="h-6 w-6 text-gold" />
+            <Globe className="h-6 w-6 text-gold" />
             <h2 className="font-display mt-3 text-lg font-semibold">Follow Us</h2>
             <SocialLinks size="sm" className="mt-3" />
           </div>
@@ -74,7 +75,7 @@ function ContactPage() {
             onClick={() => trackWhatsAppClick({ source: "contact_page" })}
             className="btn-whatsapp w-full py-4 text-base sm:text-lg"
           >
-            <MessageCircle className="h-6 w-6" />
+            <WhatsAppIcon className="h-6 w-6" />
             Order on WhatsApp
           </a>
           <p className="mt-3 text-xs text-cream-muted">

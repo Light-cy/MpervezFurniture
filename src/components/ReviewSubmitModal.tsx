@@ -135,7 +135,7 @@ export function ReviewSubmitModal({
 
   return (
     <div
-      className="fixed inset-0 z-[70] flex items-center justify-center bg-night/85 p-3 backdrop-blur-md sm:p-6"
+      className="fixed inset-0 z-[70] flex items-center justify-center bg-maroon/70 p-3 backdrop-blur-md sm:p-6"
       role="dialog"
       aria-modal="true"
       aria-label="Write a customer review"
@@ -377,7 +377,7 @@ export function ReviewSubmitModal({
                         type="button"
                         onClick={() => setMedia((prev) => prev.filter((_, i) => i !== idx))}
                         aria-label="Remove uploaded media"
-                        className="absolute top-1.5 right-1.5 grid h-6 w-6 place-items-center rounded-full bg-night/85 text-cream hover:bg-royal"
+                        className="absolute top-1.5 right-1.5 grid h-6 w-6 place-items-center rounded-full bg-night/85 text-cream hover:bg-royal hover:text-on-maroon"
                       >
                         <Trash2 className="h-3.5 w-3.5" />
                       </button>

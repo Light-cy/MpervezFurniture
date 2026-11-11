@@ -1,16 +1,19 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowLeft, ArrowRight, CheckCircle2, MessageCircle, Sparkles } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { useEffect, useState } from "react";
-import bedRosewood from "@/assets/products/bed-rosewood.jpg";
-import bedShahi from "@/assets/products/bed-shahi.jpg";
+import heroBed1 from "@/assets/hero/hero-bed-1.jpg";
+import heroBed2 from "@/assets/hero/hero-bed-2.jpg";
+import heroBed3 from "@/assets/hero/hero-bed-3.jpg";
 import { CategoryTiles } from "@/components/CategoryTiles";
 import { FeaturedCarousel } from "@/components/FeaturedCarousel";
 import { Marquee } from "@/components/Marquee";
 import { ProductCard } from "@/components/ProductCard";
+import { ProductSlider } from "@/components/ProductSlider";
 import { Reveal } from "@/components/Reveal";
 import { ReviewsCoverflow } from "@/components/ReviewsCoverflow";
 import { SectionHeading } from "@/components/SectionHeading";
+import { WhatsAppIcon } from "@/components/WhatsAppIcon";
 import { absoluteUrl, waLink } from "@/config/site";
 import { trackWhatsAppClick } from "@/lib/analytics";
 import { useCatalogueProducts, useCustomerReviews } from "@/lib/store-client";
@@ -43,50 +46,63 @@ export const Route = createFileRoute("/")({
 
 interface HeroSlide {
   id: string;
-  badge: string;
   title: string;
+  subtitle: string;
   description: string;
   primaryCtaText: string;
   primaryCtaLink: string;
   isPrimaryExternal?: boolean;
-  secondaryCtaText: string;
-  secondaryCtaLink: string;
+  secondaryCtaText?: string;
+  secondaryCtaLink?: string;
   image: string;
   imageAlt: string;
-  imageTag: string;
 }
 
 const HERO_SLIDES: HeroSlide[] = [
   {
-    id: "factory-rates",
-    badge: "DIRECT FROM FACTORY",
-    title: "Factory Rates Furniture Available",
+    id: "modern-bed-collection",
+    title: "Modern Bed Collection",
+    subtitle: "Simple, modern comfort for your bedroom",
     description:
-      "Direct factory pricing on royal bridal bedroom sets, luxury carved beds and drawing room furniture. Built with pure seasoned sheesham wood and backed by a 5-year warranty.",
+      "Contemporary upholstered headboards and seasoned wood frames crafted with modern aesthetics. Factory direct rates with 5-year warranty.",
     primaryCtaText: "Explore Bed Sets",
     primaryCtaLink: "/products",
-    secondaryCtaText: "Contact Showroom",
-    secondaryCtaLink: "/contact",
-    image: bedShahi,
-    imageAlt: "Shahi Hand-Carved Royal Bed Set",
-    imageTag: "Direct Factory Pricing · 5 Year Warranty",
+    secondaryCtaText: "Customize on WhatsApp",
+    secondaryCtaLink: waLink(
+      "Assalam-o-Alaikum, I want to inquire about your modern luxury bed sets.",
+    ),
+    image: heroBed1,
+    imageAlt: "Modern luxury upholstered bed collection",
   },
   {
-    id: "customization",
-    badge: "CUSTOM SIZES & FABRICS",
-    title: "Customization of Furniture Available",
+    id: "contemporary-bedroom-sets",
+    title: "Luxury Bedroom Sets",
+    subtitle: "Elegance crafted for peaceful living",
     description:
-      "Get bespoke furniture crafted to your exact room measurements, polish tones, and luxury fabric selections. Hand-crafted by master artisans with 5-year warranty.",
+      "Minimalist lines, warm ambient textures, and 5-year warranty on solid internal framing at direct factory rates.",
     primaryCtaText: "Customize on WhatsApp",
     primaryCtaLink: waLink(
-      "Assalam-o-Alaikum, I want to inquire about custom furniture designs and pricing.",
+      "Assalam-o-Alaikum, I want to inquire about custom modern bedroom set designs.",
     ),
     isPrimaryExternal: true,
     secondaryCtaText: "View Catalogue",
     secondaryCtaLink: "/products",
-    image: bedRosewood,
-    imageAlt: "Noor Mahal Carved Bed Set Customization",
-    imageTag: "100% Bespoke Designs · Factory Crafted",
+    image: heroBed2,
+    imageAlt: "Contemporary luxury modern bedroom interior with ambient lighting",
+  },
+  {
+    id: "bespoke-modern-beds",
+    title: "Bespoke Modern Beds",
+    subtitle: "Tailored to your room dimensions & style",
+    description:
+      "Choose your exact room measurements, luxury velvet or linen headboard, and matching bedside tables.",
+    primaryCtaText: "Chat on WhatsApp",
+    primaryCtaLink: waLink("Assalam-o-Alaikum, I want to order a custom-sized modern bed."),
+    isPrimaryExternal: true,
+    secondaryCtaText: "Showroom Location",
+    secondaryCtaLink: "/contact",
+    image: heroBed3,
+    imageAlt: "Modern minimalist luxury bedroom bed set",
   },
 ];
 
@@ -96,42 +112,60 @@ function HeroCarousel() {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrent((prev) => (prev + 1) % HERO_SLIDES.length);
-    }, 4500);
+    }, 5000);
     return () => clearInterval(timer);
   }, []);
 
   const slide = HERO_SLIDES[current] ?? HERO_SLIDES[0]!;
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-night-card/70 via-night to-night py-8 sm:py-16">
-      {/* Subtle clean background glows */}
-      <div className="pointer-events-none absolute -top-24 -left-32 h-80 w-80 rounded-full bg-gold/10 blur-[120px]" />
-      <div className="pointer-events-none absolute -right-32 top-1/3 h-80 w-80 rounded-full bg-royal/15 blur-[120px]" />
-
-      <div className="mx-auto max-w-6xl px-4">
-        <AnimatePresence mode="wait">
+    <section className="relative px-3 pt-3 pb-6 sm:px-6 sm:pt-4 sm:pb-8 lg:px-8 xl:px-10">
+      <div className="relative mx-auto flex min-h-[440px] w-full max-w-[1536px] items-center overflow-hidden rounded-2xl border border-border/80 shadow-2xl sm:min-h-[520px] sm:rounded-3xl md:min-h-[580px] lg:min-h-[640px]">
+        {/* Background images with crossfade */}
+        <AnimatePresence initial={false}>
           <motion.div
             key={slide.id}
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.4 }}
-            className="grid items-center gap-8 md:grid-cols-2 md:gap-12"
+            initial={{ opacity: 0, scale: 1.03 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.7, ease: "easeInOut" }}
+            className="absolute inset-0"
           >
-            {/* Slide Content */}
-            <div className="text-center md:text-left">
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-gold/40 bg-gold/10 px-3.5 py-1 text-xs font-semibold tracking-wider text-gold">
-                <Sparkles className="h-3.5 w-3.5" />
-                {slide.badge}
-              </span>
-              <h1 className="gold-shimmer-text mt-4 font-display text-3xl font-extrabold leading-tight sm:text-5xl lg:text-6xl">
+            <img
+              src={slide.image}
+              alt={slide.imageAlt}
+              className="h-full w-full object-cover object-center"
+            />
+            {/* Cinematic dark overlay on the left & bottom for crystal clear white typography */}
+            <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/45 to-black/10" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-black/20" />
+          </motion.div>
+        </AnimatePresence>
+
+        {/* Content Overlaid on Left (exact Lahore Furniture style) */}
+        <div className="relative z-10 max-w-2xl px-6 py-12 text-left sm:px-12 md:px-16">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={slide.id}
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -14 }}
+              transition={{ duration: 0.4 }}
+            >
+              <h1 className="font-display text-4xl font-bold tracking-tight text-white sm:text-6xl md:text-7xl leading-[1.08]">
                 {slide.title}
               </h1>
-              <p className="mx-auto mt-4 max-w-lg text-base text-cream-muted md:mx-0 sm:text-lg">
+
+              <p className="mt-3 text-base font-medium text-white/95 sm:text-xl">
+                {slide.subtitle}
+              </p>
+
+              <p className="mt-2 hidden max-w-lg text-xs leading-relaxed text-white/75 sm:block sm:text-sm">
                 {slide.description}
               </p>
 
-              <div className="mt-7 flex flex-wrap justify-center gap-3 md:justify-start">
+              {/* Action Buttons */}
+              <div className="mt-6 flex flex-wrap items-center gap-3 sm:mt-8">
                 {slide.isPrimaryExternal ? (
                   <a
                     href={slide.primaryCtaLink}
@@ -140,96 +174,75 @@ function HeroCarousel() {
                     onClick={() => trackWhatsAppClick({ source: "hero_banner" })}
                     className="btn-whatsapp inline-flex items-center gap-2"
                   >
-                    <MessageCircle className="h-5 w-5" />
+                    <WhatsAppIcon className="h-5 w-5" />
                     {slide.primaryCtaText}
                   </a>
                 ) : (
                   <Link
                     to={slide.primaryCtaLink as "/" | "/products" | "/contact"}
-                    className="btn-gold"
+                    className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-bold text-cream shadow-xl transition-all hover:scale-105 hover:bg-white/95"
                   >
                     {slide.primaryCtaText}
                   </Link>
                 )}
 
-                <Link
-                  to={slide.secondaryCtaLink as "/" | "/products" | "/contact"}
-                  className="btn-outline-gold"
-                >
-                  {slide.secondaryCtaText}
-                </Link>
+                {slide.secondaryCtaLink &&
+                  (slide.secondaryCtaLink.startsWith("http") ? (
+                    <a
+                      href={slide.secondaryCtaLink}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center justify-center gap-2 rounded-full border border-white/50 bg-black/35 px-5 py-3 text-sm font-semibold text-white backdrop-blur-md transition-all hover:bg-white/15 hover:border-white/80"
+                    >
+                      <WhatsAppIcon className="h-4 w-4" />
+                      {slide.secondaryCtaText}
+                    </a>
+                  ) : (
+                    <Link
+                      to={slide.secondaryCtaLink as "/" | "/products" | "/contact"}
+                      className="inline-flex items-center justify-center gap-2 rounded-full border border-white/50 bg-black/35 px-5 py-3 text-sm font-semibold text-white backdrop-blur-md transition-all hover:bg-white/15 hover:border-white/80"
+                    >
+                      {slide.secondaryCtaText}
+                    </Link>
+                  ))}
               </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
 
-              {/* Guarantees */}
-              <div className="mt-8 flex flex-wrap items-center justify-center gap-5 text-xs text-cream-muted md:justify-start">
-                <span className="flex items-center gap-1.5 font-medium">
-                  <CheckCircle2 className="h-4 w-4 text-gold" />5 Years Warranty
-                </span>
-                <span className="flex items-center gap-1.5 font-medium">
-                  <CheckCircle2 className="h-4 w-4 text-gold" />
-                  Pure Seasoned Sheesham
-                </span>
-                <span className="flex items-center gap-1.5 font-medium">
-                  <CheckCircle2 className="h-4 w-4 text-gold" />
-                  Lahore Showroom Visit
-                </span>
-              </div>
-            </div>
+        {/* Lahore Furniture style bottom slide controls (< . . . >) */}
+        <div className="absolute bottom-4 left-1/2 z-20 flex -translate-x-1/2 items-center gap-2 rounded-full border border-white/20 bg-black/45 px-3 py-1.5 backdrop-blur-md sm:bottom-6">
+          <button
+            type="button"
+            onClick={() => setCurrent((prev) => (prev === 0 ? HERO_SLIDES.length - 1 : prev - 1))}
+            aria-label="Previous slide"
+            className="flex h-7 w-7 items-center justify-center rounded-full text-white/80 transition-colors hover:bg-white/20 hover:text-white"
+          >
+            <ChevronLeft className="h-4 w-4" />
+          </button>
 
-            {/* Slide Bed Set Image */}
-            <div className="relative">
-              <div className="overflow-hidden rounded-3xl border border-gold/30 bg-night-card shadow-2xl shadow-gold/10">
-                <img
-                  src={slide.image}
-                  alt={slide.imageAlt}
-                  width={1024}
-                  height={1024}
-                  className="aspect-square w-full object-cover transition-transform duration-700 hover:scale-105"
-                />
-                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-night via-night/60 to-transparent p-5">
-                  <span className="inline-block rounded-full bg-gold/20 backdrop-blur-md border border-gold/40 px-3 py-1 text-xs font-semibold text-gold">
-                    {slide.imageTag}
-                  </span>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </AnimatePresence>
-
-        {/* Carousel Navigation Bar */}
-        <div className="mt-8 flex items-center justify-between border-t border-border/70 pt-4">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 px-1">
             {HERO_SLIDES.map((s, idx) => (
               <button
                 key={s.id}
                 type="button"
                 onClick={() => setCurrent(idx)}
                 aria-label={`Go to slide: ${s.title}`}
-                className={`h-2.5 rounded-full transition-all duration-300 ${
-                  idx === current ? "w-8 bg-gold" : "w-2.5 bg-border hover:bg-gold/50"
+                className={`h-2 rounded-full transition-all duration-300 ${
+                  idx === current ? "w-6 bg-white" : "w-2 bg-white/40 hover:bg-white/70"
                 }`}
               />
             ))}
           </div>
 
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={() => setCurrent((prev) => (prev === 0 ? HERO_SLIDES.length - 1 : prev - 1))}
-              aria-label="Previous slide"
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-night-card text-cream-muted transition-colors hover:border-gold hover:text-gold"
-            >
-              <ArrowLeft className="h-4 w-4" />
-            </button>
-            <button
-              type="button"
-              onClick={() => setCurrent((prev) => (prev + 1) % HERO_SLIDES.length)}
-              aria-label="Next slide"
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-night-card text-cream-muted transition-colors hover:border-gold hover:text-gold"
-            >
-              <ArrowRight className="h-4 w-4" />
-            </button>
-          </div>
+          <button
+            type="button"
+            onClick={() => setCurrent((prev) => (prev + 1) % HERO_SLIDES.length)}
+            aria-label="Next slide"
+            className="flex h-7 w-7 items-center justify-center rounded-full text-white/80 transition-colors hover:bg-white/20 hover:text-white"
+          >
+            <ChevronRight className="h-4 w-4" />
+          </button>
         </div>
       </div>
     </section>
@@ -250,7 +263,7 @@ function Home() {
       <Marquee />
 
       {/* 3. Featured Products */}
-      <section className="mx-auto max-w-6xl px-4 pt-14 sm:pt-20">
+      <section className="mx-auto w-full max-w-[1536px] px-4 pt-14 sm:px-6 sm:pt-20 lg:px-8 xl:px-10">
         <Reveal>
           <SectionHeading eyebrow="Hand-picked" title="Featured Products" />
         </Reveal>
@@ -262,7 +275,7 @@ function Home() {
       </section>
 
       {/* 4. Categories */}
-      <section className="mx-auto max-w-6xl px-4 pt-14 sm:pt-20">
+      <section className="mx-auto w-full max-w-[1536px] px-4 pt-14 sm:px-6 sm:pt-20 lg:px-8 xl:px-10">
         <Reveal>
           <SectionHeading eyebrow="Browse the collection" title="Shop by Category" />
         </Reveal>
@@ -271,36 +284,61 @@ function Home() {
         </Reveal>
       </section>
 
-      {/* 5. Best Sellers — responsive 4-column desktop grid */}
-      <section className="mx-auto max-w-6xl px-4 pt-14 sm:pt-20">
+      {/* 5. Best Sellers — Luxury Product Slider (Zero Empty Gaps) */}
+      <section className="mx-auto w-full max-w-[1536px] px-4 pt-14 sm:px-6 sm:pt-20 lg:px-8 xl:px-10">
         <Reveal>
           <SectionHeading eyebrow="Customer favourites" title="Best Sellers" />
         </Reveal>
         <Reveal delay={0.1}>
-          <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-3 lg:grid-cols-4">
-            {bestSellers.map((p) => (
-              <ProductCard key={p.id} product={p} />
-            ))}
+          <div className="mt-8">
+            <ProductSlider products={bestSellers} />
           </div>
         </Reveal>
       </section>
 
-      {/* 6. All Products — above reviews */}
-      <section id="all-products" className="mx-auto max-w-6xl scroll-mt-24 px-4 pt-14 sm:pt-20">
+      {/* 6. All Products — Single Row Preview with See Full Collection CTA */}
+      <section
+        id="all-products"
+        className="mx-auto w-full max-w-[1536px] scroll-mt-24 px-4 pt-14 sm:px-6 sm:pt-20 lg:px-8 xl:px-10"
+      >
         <Reveal>
           <SectionHeading eyebrow="The full collection" title="Hamari Tamam Products" />
         </Reveal>
         <Reveal delay={0.1}>
-          <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-3 lg:grid-cols-4">
-            {products.map((p) => (
-              <ProductCard key={p.id} product={p} />
+          <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+            {products.slice(0, 5).map((p, idx) => (
+              <div
+                key={p.id}
+                className={
+                  idx === 2
+                    ? "hidden md:block"
+                    : idx === 3
+                      ? "hidden lg:block"
+                      : idx === 4
+                        ? "hidden xl:block"
+                        : "block"
+                }
+              >
+                <ProductCard product={p} className="h-full" />
+              </div>
             ))}
+          </div>
+
+          <div className="mt-8 text-center sm:mt-10">
+            <Link
+              to="/products"
+              search={{}}
+              className="inline-flex items-center justify-center gap-2 rounded-full border border-gold/40 bg-night-card px-8 py-3.5 text-sm font-bold tracking-wide text-cream shadow-md transition-all duration-300 hover:scale-105 hover:border-gold hover:bg-gold hover:text-night"
+            >
+              <span>See Full Collection</span>
+              <ArrowRight className="h-4 w-4" />
+            </Link>
           </div>
         </Reveal>
       </section>
 
       {/* 7. Customer Reviews */}
-      <section className="mx-auto max-w-6xl px-4 pt-14 sm:pt-20">
+      <section className="mx-auto w-full max-w-[1536px] px-4 pt-14 sm:px-6 sm:pt-20 lg:px-8 xl:px-10">
         <Reveal>
           <SectionHeading eyebrow="What Lahore says" title="Customer Reviews" />
         </Reveal>

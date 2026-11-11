@@ -245,6 +245,9 @@ export async function handleApiRequest(request: Request, env: unknown): Promise<
         name: payload.name.trim(),
         category: payload.category as Category,
         price: Math.max(0, Math.round(payload.price)),
+        ...(typeof payload.originalPrice === "number" && payload.originalPrice > 0
+          ? { originalPrice: Math.round(payload.originalPrice) }
+          : {}),
         ...(payload.badge ? { badge: payload.badge } : {}),
         images,
         colours,

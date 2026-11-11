@@ -1,29 +1,44 @@
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import type { Product } from "@/data/products";
-import { formatPrice } from "@/data/products";
+import { CATEGORIES, formatOriginalPrice, formatPrice } from "@/data/products";
 import { cn } from "@/lib/utils";
 
 function FeaturedCard({ product }: { product: Product }) {
+  const category = CATEGORIES.find((c) => c.id === product.category);
+  const categoryLabel = category?.label ?? product.category;
+
   return (
     <Link
       to="/product/$id"
       params={{ id: product.id }}
-      className="group w-52 shrink-0 overflow-hidden rounded-2xl border border-border bg-night-card transition-all duration-300 hover:-translate-y-1.5 hover:border-gold/40 hover:shadow-xl hover:shadow-gold/10 sm:w-64"
+      className="group w-52 shrink-0 overflow-hidden rounded-2xl border border-border bg-night-card shadow-xs transition-all duration-300 hover:-translate-y-1.5 hover:border-gold/50 hover:shadow-xl hover:shadow-gold/10 sm:w-64"
     >
-      <div className="relative aspect-square overflow-hidden">
+      <div className="relative aspect-square overflow-hidden bg-night">
         <img
           src={product.images[0]}
           alt={product.name}
           loading="lazy"
           width={1024}
           height={1024}
-          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+          className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
         />
       </div>
-      <div className="p-3">
-        <h3 className="font-display line-clamp-1 text-sm sm:text-base">{product.name}</h3>
-        <p className="mt-1 text-sm font-semibold text-gold">{formatPrice(product.price)}</p>
+      <div className="p-3 sm:p-3.5">
+        <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-gold">
+          {categoryLabel}
+        </span>
+        <h3 className="mt-1 line-clamp-1 font-serif text-sm sm:text-base font-medium text-cream transition-colors group-hover:text-gold">
+          {product.name}
+        </h3>
+        <div className="mt-2 flex items-baseline gap-2 border-t border-border/40 pt-2">
+          <span className="text-sm sm:text-base font-bold text-cream tracking-tight">
+            {formatPrice(product.price)}
+          </span>
+          <span className="text-xs text-cream-muted/75 line-through">
+            {formatOriginalPrice(product.price)}
+          </span>
+        </div>
       </div>
     </Link>
   );

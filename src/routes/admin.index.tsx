@@ -106,7 +106,7 @@ function AdminDashboardPage() {
 
   if (checkingAuth) {
     return (
-      <div className="mx-auto flex min-h-[65vh] max-w-6xl items-center justify-center px-4">
+      <div className="mx-auto flex min-h-[65vh] w-full max-w-[1536px] items-center justify-center px-4 sm:px-6 lg:px-8 xl:px-10">
         <div className="text-center">
           <div className="mx-auto h-10 w-10 animate-spin rounded-full border-2 border-gold border-t-transparent" />
           <p className="mt-3 text-sm text-cream-muted">Verifying admin session...</p>
@@ -129,7 +129,7 @@ function AdminDashboardPage() {
   });
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8 sm:py-10">
+    <div className="mx-auto w-full max-w-[1536px] px-4 py-8 sm:px-6 sm:py-10 lg:px-8 xl:px-10">
       {/* Top Admin Header */}
       <div className="flex flex-col justify-between gap-4 rounded-3xl border border-gold/30 bg-night-card p-5 sm:flex-row sm:items-center sm:p-6">
         <div>
@@ -162,7 +162,7 @@ function AdminDashboardPage() {
           <button
             type="button"
             onClick={() => void handleLogout()}
-            className="inline-flex items-center gap-1.5 rounded-full border border-royal/50 bg-royal/15 px-4 py-2 text-xs font-semibold text-cream transition-colors hover:bg-royal"
+            className="inline-flex items-center gap-1.5 rounded-full border border-royal/50 bg-royal/15 px-4 py-2 text-xs font-semibold text-cream transition-colors hover:bg-royal hover:text-on-maroon"
           >
             <LogOut className="h-3.5 w-3.5" /> Sign Out
           </button>
@@ -239,10 +239,15 @@ function AdminDashboardPage() {
                   </div>
 
                   <div className="p-4">
-                    <h3 className="line-clamp-1 font-display text-base font-bold text-cream">
-                      {prod.name}
-                    </h3>
-                    <p className="mt-1 text-lg font-bold text-gold">{formatPrice(prod.price)}</p>
+                    <h3 className="line-clamp-1 text-base font-bold text-cream">{prod.name}</h3>
+                    <div className="mt-1 flex items-baseline gap-2">
+                      <p className="text-base font-bold text-cream">{formatPrice(prod.price)}</p>
+                      {prod.originalPrice && prod.originalPrice > prod.price && (
+                        <span className="text-xs text-cream-muted line-through">
+                          {formatPrice(prod.originalPrice)}
+                        </span>
+                      )}
+                    </div>
                     <p className="mt-1.5 line-clamp-2 text-xs text-cream-muted">
                       {prod.description}
                     </p>
@@ -282,7 +287,7 @@ function AdminDashboardPage() {
                     type="button"
                     onClick={() => void handleDeleteProduct(prod)}
                     aria-label={`Delete ${prod.name}`}
-                    className="grid h-8 w-8 shrink-0 place-items-center rounded-xl border border-border text-cream-muted transition-colors hover:border-royal hover:bg-royal hover:text-cream"
+                    className="grid h-8 w-8 shrink-0 place-items-center rounded-xl border border-border text-cream-muted transition-colors hover:border-royal hover:bg-royal hover:text-on-maroon"
                   >
                     <Trash2 className="h-3.5 w-3.5" />
                   </button>

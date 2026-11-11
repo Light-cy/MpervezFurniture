@@ -84,7 +84,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { name: "theme-color", content: "#0a0a0a" },
+      { name: "theme-color", content: "#f7f3ef" },
       { title: "Pervez Furniture | Luxury Furniture in Lahore" },
       {
         name: "description",

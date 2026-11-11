@@ -181,7 +181,7 @@ export function ReviewsCoverflow({
                     x: rel * dims.spacing,
                     scale: SCALES[abs] ?? 1,
                     opacity: OPACITIES[abs] ?? 1,
-                    filter: `blur(${BLURS[abs] ?? 0}px)${isCenter ? " brightness(1.08)" : ""}`,
+                    filter: `blur(${BLURS[abs] ?? 0}px)`,
                   }}
                   transition={
                     reduceMotion
@@ -192,7 +192,7 @@ export function ReviewsCoverflow({
                     zIndex: Z[abs],
                     borderColor: isCenter ? "var(--gold)" : undefined,
                     boxShadow: isCenter
-                      ? "0 0 46px -12px oklch(0.731 0.121 80.5 / 0.5)"
+                      ? "0 14px 44px -12px oklch(0.625 0.118 75 / 0.35)"
                       : undefined,
                   }}
                   drag={isCenter ? "x" : false}

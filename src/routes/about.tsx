@@ -1,8 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { CheckCircle2, Factory, MapPin, MessageCircle, ShieldCheck, Sparkles } from "lucide-react";
+import { CheckCircle2, Factory, MapPin, ShieldCheck, Sparkles } from "lucide-react";
 import bedShahi from "@/assets/products/bed-shahi.jpg";
 import { Reveal } from "@/components/Reveal";
 import { SectionHeading } from "@/components/SectionHeading";
+import { WhatsAppIcon } from "@/components/WhatsAppIcon";
 import { SITE, absoluteUrl, waLink } from "@/config/site";
 import { trackWhatsAppClick } from "@/lib/analytics";
 
@@ -52,7 +53,7 @@ const PILLARS = [
 
 function AboutPage() {
   return (
-    <div className="mx-auto max-w-6xl px-4 py-10 sm:py-14">
+    <div className="mx-auto w-full max-w-[1536px] px-4 py-10 sm:px-6 sm:py-14 lg:px-8 xl:px-10">
       {/* 1. Header */}
       <Reveal>
         <SectionHeading
@@ -100,7 +101,7 @@ function AboutPage() {
             />
             <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-night via-night/70 to-transparent p-6">
               <p className="font-display text-lg font-bold text-cream">
-                Hand-Carved Seasoned Sheesham
+                Modern Luxury Craftsmanship
               </p>
               <p className="text-xs text-cream-muted">Crafted with care in Lahore, Pakistan</p>
             </div>
@@ -149,7 +150,7 @@ function AboutPage() {
               onClick={() => trackWhatsAppClick({ source: "about_page" })}
               className="btn-whatsapp inline-flex items-center gap-2"
             >
-              <MessageCircle className="h-5 w-5" />
+              <WhatsAppIcon className="h-5 w-5" />
               Discuss on WhatsApp
             </a>
             <Link to="/products" className="btn-outline-gold">

@@ -1,50 +1,65 @@
 import { Link } from "@tanstack/react-router";
-import {
-  Armchair,
-  Bed,
-  BedDouble,
-  Coffee,
-  DoorClosed,
-  Lamp,
-  Layers,
-  Sofa,
-  Sparkles,
-  UtensilsCrossed,
-} from "lucide-react";
+import catAlmirahShowcase from "@/assets/categories/almirah-showcase.jpg";
+import catBedroomSets from "@/assets/categories/bedroom-sets.jpg";
+import catBeds from "@/assets/categories/beds.jpg";
+import catCenterTables from "@/assets/categories/center-tables.jpg";
+import catChairs from "@/assets/categories/chairs.jpg";
+import catDining from "@/assets/categories/dining.jpg";
+import catDressingTables from "@/assets/categories/dressing-tables.jpg";
+import catSideTables from "@/assets/categories/side-tables.jpg";
+import catSofaCumBeds from "@/assets/categories/sofa-cum-beds.jpg";
+import catSofas from "@/assets/categories/sofas.jpg";
 import { CATEGORIES, type Category } from "@/data/products";
 
-const ICONS: Record<Category, typeof Sofa> = {
-  "bedroom-sets": BedDouble,
-  beds: Bed,
-  "dressing-tables": Sparkles,
-  "side-tables": Lamp,
-  sofas: Sofa,
-  dining: UtensilsCrossed,
-  "center-tables": Coffee,
-  "sofa-cum-beds": Layers,
-  "almirah-showcase": DoorClosed,
-  chairs: Armchair,
+const CATEGORY_IMAGES: Record<Category, string> = {
+  beds: catBeds,
+  "bedroom-sets": catBedroomSets,
+  sofas: catSofas,
+  dining: catDining,
+  chairs: catChairs,
+  "dressing-tables": catDressingTables,
+  "center-tables": catCenterTables,
+  "side-tables": catSideTables,
+  "sofa-cum-beds": catSofaCumBeds,
+  "almirah-showcase": catAlmirahShowcase,
 };
 
 export function CategoryTiles({ className }: { className?: string }) {
   return (
     <div className={className}>
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-3 sm:gap-4">
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-5">
         {CATEGORIES.map((c) => {
-          const Icon = ICONS[c.id] ?? Sofa;
+          const image = CATEGORY_IMAGES[c.id];
           return (
             <Link
               key={c.id}
               to="/products"
               search={{ category: c.id }}
-              className="group flex flex-col items-center gap-2.5 rounded-2xl border border-border bg-night-card p-4 transition-all duration-300 hover:-translate-y-1 hover:border-gold/60 hover:bg-night-elevated sm:p-6"
+              className="group relative flex flex-col overflow-hidden rounded-2xl border border-border/80 bg-night-card shadow-md transition-all duration-300 hover:-translate-y-1 hover:border-gold/60 hover:shadow-xl hover:shadow-black/40"
             >
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-night border border-border/80 transition-colors group-hover:border-gold/40 group-hover:bg-gold/10 sm:h-14 sm:w-14">
-                <Icon className="h-6 w-6 text-gold transition-transform duration-300 group-hover:scale-110 sm:h-7 sm:w-7" />
+              <div className="relative aspect-[4/3] w-full overflow-hidden bg-night sm:aspect-square">
+                <img
+                  src={image}
+                  alt={c.label}
+                  loading="lazy"
+                  width={600}
+                  height={600}
+                  className="h-full w-full object-cover object-center transition-transform duration-500 ease-out group-hover:scale-110"
+                />
+
+                {/* Dark luxury gradient overlay: Visible on mobile, revealed on hover on desktop */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/55 to-black/10 transition-opacity duration-300 md:opacity-0 md:group-hover:opacity-100" />
+
+                {/* Category label: Always visible on mobile, smooth hover reveal on desktop */}
+                <div className="absolute inset-x-0 bottom-0 flex flex-col items-center justify-end p-3.5 text-center transition-all duration-300 sm:p-5 md:translate-y-2 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100">
+                  <span className="font-display text-base font-bold tracking-wide text-white drop-shadow-lg transition-transform duration-300 group-hover:scale-105 sm:text-lg md:text-xl">
+                    {c.label}
+                  </span>
+                  <span className="mt-1 hidden items-center gap-1.5 text-xs font-semibold tracking-wide text-white/95 drop-shadow transition-all duration-200 group-hover:text-white md:inline-flex">
+                    See Collection →
+                  </span>
+                </div>
               </div>
-              <span className="text-center font-display text-sm font-medium text-cream transition-colors group-hover:text-gold sm:text-base">
-                {c.label}
-              </span>
             </Link>
           );
         })}

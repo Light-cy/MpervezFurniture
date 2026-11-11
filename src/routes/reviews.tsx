@@ -76,7 +76,7 @@ function ReviewsPage() {
       : "5.0";
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-10 sm:py-14">
+    <div className="mx-auto w-full max-w-[1536px] px-4 py-10 sm:px-6 sm:py-14 lg:px-8 xl:px-10">
       <Reveal>
         <SectionHeading
           as="h1"
@@ -255,7 +255,7 @@ function ReviewsPage() {
             </div>
           </div>
         ) : (
-          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {filteredReviews.map((r, i) => (
               <ReviewGridCard
                 key={("id" in r && r.id) || `${r.name}-${i}`}

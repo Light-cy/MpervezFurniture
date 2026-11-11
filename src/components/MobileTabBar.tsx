@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
-import { Home, Info, MessageCircle, Star, Store } from "lucide-react";
+import { Home, Info, Star, Store } from "lucide-react";
+import { WhatsAppIcon } from "@/components/WhatsAppIcon";
 import { waLink } from "@/config/site";
 import { trackWhatsAppClick } from "@/lib/analytics";
 
@@ -36,7 +37,7 @@ export function MobileTabBar() {
           onClick={() => trackWhatsAppClick({ source: "mobile_tab" })}
           className="flex flex-col items-center gap-1 py-2 text-[10px] font-medium text-cream-muted"
         >
-          <MessageCircle className="h-4.5 w-4.5 text-whatsapp" />
+          <WhatsAppIcon className="h-4.5 w-4.5 text-whatsapp" />
           WhatsApp
         </a>
       </div>

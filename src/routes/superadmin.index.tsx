@@ -8,7 +8,6 @@ import {
   ExternalLink,
   Laptop,
   LogOut,
-  MessageCircle,
   RefreshCw,
   Settings,
   ShieldAlert,
@@ -17,6 +16,7 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { useCallback, useEffect, useState, type FormEvent } from "react";
+import { WhatsAppIcon } from "@/components/WhatsAppIcon";
 import {
   fetchSuperAdminAnalytics,
   fetchSuperAdminSession,
@@ -140,7 +140,7 @@ function SuperAdminDashboardPage() {
 
   if (checkingAuth) {
     return (
-      <div className="mx-auto flex min-h-[65vh] max-w-6xl items-center justify-center px-4">
+      <div className="mx-auto flex min-h-[65vh] w-full max-w-[1536px] items-center justify-center px-4 sm:px-6 lg:px-8 xl:px-10">
         <div className="text-center">
           <div className="mx-auto h-10 w-10 animate-spin rounded-full border-2 border-gold border-t-transparent" />
           <p className="mt-3 text-sm text-cream-muted">Verifying SuperAdmin access...</p>
@@ -155,7 +155,7 @@ function SuperAdminDashboardPage() {
   const desktopPct = 100 - mobilePct;
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8 sm:py-10">
+    <div className="mx-auto w-full max-w-[1536px] px-4 py-8 sm:px-6 sm:py-10 lg:px-8 xl:px-10">
       {/* Top SuperAdmin Header */}
       <div className="flex flex-col justify-between gap-4 rounded-3xl border border-gold/40 bg-night-card p-5 sm:flex-row sm:items-center sm:p-6">
         <div>
@@ -197,7 +197,7 @@ function SuperAdminDashboardPage() {
           <button
             type="button"
             onClick={() => void handleLogout()}
-            className="inline-flex items-center gap-1.5 rounded-full border border-royal/50 bg-royal/15 px-4 py-2 text-xs font-semibold text-cream transition-colors hover:bg-royal"
+            className="inline-flex items-center gap-1.5 rounded-full border border-royal/50 bg-royal/15 px-4 py-2 text-xs font-semibold text-cream transition-colors hover:bg-royal hover:text-on-maroon"
           >
             <LogOut className="h-3.5 w-3.5" /> Sign Out
           </button>
@@ -243,7 +243,7 @@ function SuperAdminDashboardPage() {
             <div className="rounded-2xl border border-gold/30 bg-night-card p-4 sm:p-5">
               <div className="flex items-center justify-between text-xs text-cream-muted">
                 <span>WhatsApp Clicks Today</span>
-                <MessageCircle className="h-4 w-4 text-whatsapp" />
+                <WhatsAppIcon className="h-4 w-4 text-whatsapp" />
               </div>
               <p className="mt-2 font-display text-3xl font-bold text-cream">
                 {analytics?.clicksToday ?? 0}

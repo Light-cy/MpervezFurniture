@@ -1,5 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { ArrowLeft, ArrowRight, Check, MessageCircle, MessageSquarePlus } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, MessageSquarePlus } from "lucide-react";
 import { useState } from "react";
 import { ProductCard } from "@/components/ProductCard";
 import { Reveal } from "@/components/Reveal";
@@ -9,8 +9,15 @@ import { ReviewsCoverflow } from "@/components/ReviewsCoverflow";
 import { ReviewSubmitModal } from "@/components/ReviewSubmitModal";
 import { SectionHeading } from "@/components/SectionHeading";
 import { Stars } from "@/components/Stars";
+import { WhatsAppIcon } from "@/components/WhatsAppIcon";
 import { absoluteUrl, waLink } from "@/config/site";
-import { formatPrice, getProduct, orderMessage, type ProductColour } from "@/data/products";
+import {
+  formatOriginalPrice,
+  formatPrice,
+  getProduct,
+  orderMessage,
+  type ProductColour,
+} from "@/data/products";
 import { trackWhatsAppClick } from "@/lib/analytics";
 import { useCatalogueProducts, useCustomerReviews } from "@/lib/store-client";
 import type { Review, ReviewItem } from "@/lib/store-types";
@@ -20,7 +27,7 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/product/$id")({
   component: ProductPage,
   notFoundComponent: () => (
-    <div className="mx-auto max-w-6xl px-4 py-24 text-center">
+    <div className="mx-auto w-full max-w-[1536px] px-4 py-24 text-center sm:px-6 lg:px-8 xl:px-10">
       <h1 className="font-display text-3xl font-bold">Product not found</h1>
       <Link to="/products" search={{}} className="btn-gold mt-6">
         Back to Products
@@ -102,7 +109,7 @@ function ProductPage() {
   };
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8 sm:py-12">
+    <div className="mx-auto w-full max-w-[1536px] px-4 py-8 sm:px-6 sm:py-12 lg:px-8 xl:px-10">
       {/* 1. Back link */}
       <Link
         to="/products"
@@ -149,7 +156,7 @@ function ProductPage() {
 
         {/* 3–6. Details */}
         <div>
-          <h1 className="font-display text-2xl font-bold sm:text-4xl">{product.name}</h1>
+          <h1 className="text-2xl font-bold text-cream sm:text-3xl lg:text-4xl">{product.name}</h1>
           <div className="mt-3 flex flex-wrap items-center gap-3">
             <Stars rating={5} />
             <a
@@ -161,7 +168,29 @@ function ProductPage() {
                 : `${allReviews.length} showroom customer reviews`}
             </a>
           </div>
-          <p className="mt-4 text-3xl font-bold text-gold">{formatPrice(product.price)}</p>
+          <div className="mt-4 flex flex-wrap items-baseline gap-3">
+            <span className="text-2xl sm:text-3xl lg:text-4xl font-bold text-cream">
+              {formatPrice(product.price)}
+            </span>
+            {(() => {
+              const original =
+                product.originalPrice ?? Math.round((product.price * 1.55) / 500) * 500;
+              if (original <= product.price) return null;
+              const discountPct = Math.round(((original - product.price) / original) * 100);
+              return (
+                <>
+                  <span className="text-base sm:text-lg text-cream-muted line-through">
+                    {formatOriginalPrice(product.price, original)}
+                  </span>
+                  {discountPct > 0 && (
+                    <span className="rounded-full bg-gold/15 px-2.5 py-0.5 text-xs font-bold text-gold border border-gold/25">
+                      {discountPct}% OFF
+                    </span>
+                  )}
+                </>
+              );
+            })()}
+          </div>
           <p className="mt-4 text-cream-muted">{product.description}</p>
 
           {/* 4 Interactive Color Swatches with Active Name */}
@@ -228,7 +257,7 @@ function ProductPage() {
             }
             className="btn-whatsapp mt-6 w-full py-4 text-base sm:text-lg"
           >
-            <MessageCircle className="h-6 w-6" />
+            <WhatsAppIcon className="h-6 w-6" />
             Order on WhatsApp
           </a>
           <p className="mt-3 text-center text-xs text-cream-muted">

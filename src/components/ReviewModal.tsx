@@ -57,7 +57,7 @@ export function ReviewModal({
 
   return (
     <div
-      className="fixed inset-0 z-[70] flex items-center justify-center bg-night/85 p-3 backdrop-blur-md sm:p-6"
+      className="fixed inset-0 z-[70] flex items-center justify-center bg-maroon/70 p-3 backdrop-blur-md sm:p-6"
       role="dialog"
       aria-modal="true"
       aria-label={`Customer review by ${review.name}`}
